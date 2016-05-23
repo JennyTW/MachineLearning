@@ -67,7 +67,6 @@ Fit<-train(classe ~.,data=t_train,preprocess="center",method="rf")
 x<-predict(Fit,newdata = t_test)
 y<-t_test$classe
 table(x,y)
-sum(testingPrediction == testing_data$classe) / length(testingPrediction)
 
 ```
 
