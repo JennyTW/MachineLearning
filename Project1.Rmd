@@ -27,8 +27,8 @@ library(rpart)
 library(rpart.plot)
 
 # Load and Read Dataset
-train<-read.csv("J://R/Train.csv",na.strings=c("#DIV/0","", "NA"))
-test<-read.csv("J://R/Test.csv",na.strings=c("#DIV/0","", "NA"))
+train<-read.csv("~/R/data/ML/Train.csv",na.strings=c("#DIV/0","", "NA"))
+test<-read.csv("~/R/data/ML/Test.csv",na.strings=c("#DIV/0","", "NA"))
 
 # Clean data
 ## Removing Zero Covariates
@@ -70,5 +70,4 @@ confusionMatrix(x,y)
 
 ```{r}
 z<-predict(Fit,newdata = test)
-z
 ```
