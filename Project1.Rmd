@@ -20,19 +20,15 @@ In this project, we take the dataset from activity sensor device and build up a 
 - source: http://groupware.les.inf.puc-rio.br/har. 
 
 ```{r}
-# Load 
+# Load Library
 library(caret)
 library(randomForest)
+library(rpart)
+library(rpart.plot)
 
 # Load and Read Dataset
-TrainUrl <- "http://d396qusza40orc.cloudfront.net/predmachlearn/pml-training.csv"
-TestUrl <- "http://d396qusza40orc.cloudfront.net/predmachlearn/pml-testing.csv"
-
-download.file(TrainUrl,destfile="J:/R/Train.csv")
-download.file(TestUrl,destfile="J:/R/Test.csv")
-
-train<-read.csv("J:/R/Train.csv",na.strings=c("#DIV/0","", "NA"))
-test<-read.csv("J:/R/Test.csv",na.strings=c("#DIV/0","", "NA"))
+train<-read.csv("J://R/Train.csv",na.strings=c("#DIV/0","", "NA"))
+test<-read.csv("J://R/Test.csv",na.strings=c("#DIV/0","", "NA"))
 
 # Clean data
 ## Removing Zero Covariates
@@ -57,22 +53,22 @@ t_train <- train[inTrain, ]
 t_test  <- train[-inTrain, ]
 ```
 
-#4.Build prediction model
+#4.Build prediction model:decision tree
 
 ```{r}
 # Build model
-Fit<-train(classe ~.,data=t_train,preprocess="center",method="rf")
+Fit <- rpart(classe ~ ., data=t_train, method="class")
 
 # Cross validation
-x<-predict(Fit,newdata = t_test)
+x <- predict(Fit, t_test, type = "class")
 y<-t_test$classe
 table(x,y)
-
+confusionMatrix(x,y)
 ```
 
 #5.Apply to Testing dataset
 
 ```{r}
-z<-predict(modFit,newdata = test)
+z<-predict(Fit,newdata = test)
 z
 ```
